@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package message;
+
+option go_package = "gen/message";
+
+
+service MessageService {
+  rpc AddNumber(Request) returns (Response);
+}
+
+message Request {
+  int32 number_1=2;
+  int32 number_2=3;
+}
+
+message Response{
+    int32 result=1;
+}
+
