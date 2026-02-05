@@ -9,10 +9,27 @@ import (
 	"google.golang.org/grpc/reflection"
 
 	pb "service1/internal/gen/message"
+	producer "service1/internal/kafka-producer"
 	"service1/internal/service"
 )
 
 func Init() {
+
+	KafkaProducer,err:=producer.NewKafkaProducer(producer.Config{
+		Brokers: []string{"localhost:9092"},
+		Topic: "message.created",
+		ClientID: "service1",
+	})
+
+
+	if err!=nil{
+		log.Fatalf("failed to create Kafka producer: %v", err)
+	}
+
+
+	defer KafkaProducer.Close()
+
+
 	lis, err := net.Listen("tcp",":50051")
 	if err!=nil{
 		log.Fatalf("failed to listen :%v",err)
@@ -22,7 +39,7 @@ func Init() {
 
 	reflection.Register(grpcServer)
 
-	msgService:=service.NewMessageService()
+	msgService:=service.NewMessageService(KafkaProducer)
 
 	pb.RegisterMessageServiceServer(grpcServer,msgService)
 
