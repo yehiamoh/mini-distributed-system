@@ -6,6 +6,7 @@ import (
 	"service1/internal/database"
 	pb "service1/internal/gen/message"
 	"service1/internal/models"
+	"time"
 
 	"github.com/google/uuid"
 	"google.golang.org/grpc/codes"
@@ -34,6 +35,7 @@ func(s *MessageService) AddNumber(ctx context.Context, req *pb.Request) (*pb.Res
 		Num_1: req.Number_1,
 		Nums_2: req.Number_2,
 		Result: result,
+		CreatedAt: time.Now(),
 
 	}
 	payload,err:=json.Marshal(messagePayload)

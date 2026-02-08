@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    /* Project structure */
+    "rootDir": "src",
+    "outDir": "dist",
+
+    /* ESM + Node */
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "ES2022",
+
+    /* Node types */
+    "types": ["node"],
+    "esModuleInterop": true,
+
+    /* Strictness */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+
+    /* Output */
+    "sourceMap": true,
+
+    /* Required for Node ESM */
+    "verbatimModuleSyntax": true,
+
+    /* Quality */
+    "skipLibCheck": true
+  },
+  "include": ["src"]
+}

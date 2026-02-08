@@ -1,0 +1,27 @@
+{
+  "name": "service2",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^5.2.1",
+    "kafkajs": "^2.2.4"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.2.2",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}
