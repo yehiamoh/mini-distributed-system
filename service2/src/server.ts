@@ -1,12 +1,18 @@
 import express from "express";
 import type { Request, Response } from "express";
 import { startConsumer, stopConsumer } from "./kafka/consumer.js";
+import { retrieveLastValueInTheFile } from "./service/service.js";
 
 const app = express();
 
 app.use(express.json());
-app.use("/", (req: Request, res: Response) => {
-  res.json({ helth: "true" });
+app.get("/number", async (req: Request, res: Response) => {
+  try {
+    const result = await retrieveLastValueInTheFile();
+    res.status(200).json({ result });
+  } catch (error) {
+    res.status(500);
+  }
 });
 const server = app.listen(80, async () => {
   console.log("service 2 server is running on port 80");
