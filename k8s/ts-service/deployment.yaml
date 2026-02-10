@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ts-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ts-service
+  template:
+    metadata:
+      labels:
+        app: ts-service
+    spec:
+      containers:
+        - name: ts-service
+          image: ts-service:3.0
+          ports:
+            - containerPort: 3000
+          env:
+            - name: KAFKA_BROKER
+              value: kafka:9092

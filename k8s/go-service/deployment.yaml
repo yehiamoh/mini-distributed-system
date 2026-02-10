@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: go-service
+  template:
+    metadata:
+      labels:
+        app: go-service
+    spec:
+      containers:
+        - name: go-service
+          image: go-service:4.0
+          ports:
+            - containerPort: 50051
+          env:
+            - name: DB_URL
+              value: postgres://postgres:postgres@postgres:5432/app_db
+            - name: KAFKA_BROKER
+              value: kafka:9092

@@ -14,7 +14,7 @@ app.get("/number", async (req: Request, res: Response) => {
     res.status(500);
   }
 });
-const server = app.listen(80, async () => {
+const server = app.listen(3000, async () => {
   console.log("service 2 server is running on port 80");
   await startConsumer();
 });

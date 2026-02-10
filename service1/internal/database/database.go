@@ -8,7 +8,7 @@ import (
 )
 
 func Open()(*pgx.Conn,error){
-	conn,err:=pgx.Connect(context.Background(),"postgres://postgres:postgres@localhost:5433/app_db")
+	conn,err:=pgx.Connect(context.Background(),"postgres://postgres:postgres@postgres:5432/app_db")
 	
 	if err!=nil{
 		return nil,err

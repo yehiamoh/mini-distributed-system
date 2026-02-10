@@ -4,7 +4,7 @@ import { sumAndSaveResult } from "../service/service.js";
 
 const kafka = new Kafka({
   clientId: "service2",
-  brokers: ["localhost:9092"],
+  brokers: ["kafka:9092"],
 });
 
 let consumer: Consumer;

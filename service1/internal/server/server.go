@@ -22,7 +22,7 @@ func Init() {
 	defer cancel()
 
 	KafkaProducer,err:=producer.NewKafkaProducer(producer.Config{
-		Brokers: []string{"localhost:9092"},
+		Brokers: []string{"kafka:9092"},
 		Topic: "message.created",
 		ClientID: "service1",
 	})
