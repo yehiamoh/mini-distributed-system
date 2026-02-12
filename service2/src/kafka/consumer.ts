@@ -2,8 +2,9 @@ import { Kafka } from "kafkajs";
 import type { EachMessagePayload, Consumer } from "kafkajs";
 import { sumAndSaveResult } from "../service/service.js";
 import {
-  cumlativeSumGauge,
+  cumulativeSumCounter,
   kafkaMessageCounter,
+  kafkaProcessingDuration,
 } from "../prometheus/metrics.js";
 
 const kafka = new Kafka({
@@ -38,11 +39,22 @@ export async function startConsumer(): Promise<void> {
         };
         console.log("Recieved", payload);
 
-        // Prometheus metrics
-        cumlativeSumGauge.inc(payload.Result);
-        kafkaMessageCounter.inc();
+        const createdAtInMs = new Date(payload.CreatedAt).getTime();
 
         await sumAndSaveResult(payload.Result);
+
+        const durationSeconds = (Date.now() - createdAtInMs) / 1000;
+
+        // Prometheus metrics
+        kafkaProcessingDuration.observe(
+          {
+            topic,
+            consumer_group: "service2-group",
+          },
+          durationSeconds,
+        );
+        cumulativeSumCounter.inc(payload.Result);
+        kafkaMessageCounter.inc();
       } catch (err) {
         console.error("Failed to process message", err);
       }

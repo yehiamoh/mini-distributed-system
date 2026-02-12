@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: ts-service
-          image: ts-service:4.0
+          image: ts-service:latest
           ports:
             - containerPort: 3000
           env:
