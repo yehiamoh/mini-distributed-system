@@ -1,22 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ts-service
+  name: grafana
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ts-service
+      app: grafana
   template:
     metadata:
       labels:
-        app: ts-service
+        app: grafana
     spec:
       containers:
-        - name: ts-service
-          image: ts-service:4.0
+        - name: grafana
+          image: grafana/grafana
           ports:
             - containerPort: 3000
-          env:
-            - name: KAFKA_BROKER
-              value: kafka:9092

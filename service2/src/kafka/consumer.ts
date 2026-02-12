@@ -1,6 +1,10 @@
 import { Kafka } from "kafkajs";
 import type { EachMessagePayload, Consumer } from "kafkajs";
 import { sumAndSaveResult } from "../service/service.js";
+import {
+  cumlativeSumGauge,
+  kafkaMessageCounter,
+} from "../prometheus/metrics.js";
 
 const kafka = new Kafka({
   clientId: "service2",
@@ -33,6 +37,10 @@ export async function startConsumer(): Promise<void> {
           RequestID: string;
         };
         console.log("Recieved", payload);
+
+        // Prometheus metrics
+        cumlativeSumGauge.inc(payload.Result);
+        kafkaMessageCounter.inc();
 
         await sumAndSaveResult(payload.Result);
       } catch (err) {

@@ -2,10 +2,22 @@ import express from "express";
 import type { Request, Response } from "express";
 import { startConsumer, stopConsumer } from "./kafka/consumer.js";
 import { retrieveLastValueInTheFile } from "./service/service.js";
+import { register } from "./prometheus/metrics.js";
 
 const app = express();
 
 app.use(express.json());
+
+app.get("/metrics", async (_, res) => {
+  try {
+    res.set("Content-Type", register.contentType);
+    const metrics = await register.metrics(); // get current metrics
+    res.end(metrics);
+  } catch (err) {
+    res.status(500).end(err);
+  }
+});
+
 app.get("/number", async (req: Request, res: Response) => {
   try {
     const result = await retrieveLastValueInTheFile();
